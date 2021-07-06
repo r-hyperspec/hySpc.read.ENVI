@@ -11,8 +11,8 @@ When creating a new package (repository):
   - [x] `NEWS.md`
   - [x] `README.md`
   - [x] `LICENSE`
-  - [ ] `tests/testthat.R`
-  - [ ] `tests/testthat/test_attached.R`
+  - [x] `tests/testthat.R`
+  - [x] `tests/testthat/test_attached.R`
   - [ ] other files
 - [x] update `DESCRIPTION`:
   - [x] title
@@ -29,12 +29,12 @@ When creating a new package (repository):
   - [x] update badges
   - [x] update installation instructions (e.g., instead of `devtools::install(build_vignettes = TRUE)` the following code might be more appropriate if no vignettes are included `devtools::install()`)
   - [x] update other information, if needed.
-- [ ] create issue labels:
-  - [ ] apply github labels (in `github-helpers/`),
-  - [ ] delete `github-helpers/`
+- [x] create issue labels:
+  - [x] apply github labels (in `github-helpers/`),
+  - [x] delete `github-helpers/`
 - [ ] Code & Vignettes:
     - [x] Be sure to review `CONTRIBUTING.md` which describes the standard operating procedures for the `r-hyperspec` project.
-    - [ ] Copy the code needed for this new package from the original `hyperSpec` files. Leave the old code untouched for now, as `hyperSpec` has to continue to operate.
+    - [x] Copy the code needed for this new package from the original `hyperSpec` files. Leave the old code untouched for now, as `hyperSpec` has to continue to operate.
     - [ ] Update the code and write new code as needed.
     - [ ] Update unit tests as needed.
     - [ ] Update examples as needed.
