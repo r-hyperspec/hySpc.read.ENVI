@@ -28,20 +28,20 @@ read.ENVI.HySpex <- function(file = stop("read.ENVI.HySpex: file name needed"),
   spc
 }
 
-hySpc.testthat::test(read.ENVI.HySpex) <- function() {
-  context("read.ENVI.HySpex")
-
-  filename <- system.file("extdata", "HySpexNIR.hyspex", package="hySpc.read.envi")
-  test_that("Hyspex ENVI file", {
-    hyspex <- hySpc.read.envi::read.ENVI.HySpex(filename)
-
-    expect_equal(hyspex$spc[10], 114)
-    expect_equal(hyspex$spc[251], 82)
-
-    expect_equal(round(hyspex@wavelength[[31]], 2), 1117.64)
-    expect_equal(round(hyspex@wavelength[[119]], 2), 1594.75)
-
-    expect_equal(hyspex@label[[1]], "x / pixel")
-    expect_equal(hyspex@label[[3]], "I / a.u.")
-  })
-}
+# hySpc.testthat::test(read.ENVI.HySpex) <- function() {
+#   context("read.ENVI.HySpex")
+#
+#   filename <- system.file("extdata", "HySpexNIR.hyspex", package="hySpc.read.envi")
+#   test_that("Hyspex ENVI file", {
+#     hyspex <- hySpc.read.envi::read.ENVI.HySpex(filename)
+#
+#     expect_equal(hyspex$spc[10], 114)
+#     expect_equal(hyspex$spc[251], 82)
+#
+#     expect_equal(round(hyspex@wavelength[[31]], 2), 1117.64)
+#     expect_equal(round(hyspex@wavelength[[119]], 2), 1594.75)
+#
+#     expect_equal(hyspex@label[[1]], "x / pixel")
+#     expect_equal(hyspex@label[[3]], "I / a.u.")
+#   })
+# }
