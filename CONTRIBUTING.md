@@ -45,7 +45,7 @@ The following is a set of guidelines for contributing to the `R` package `hySpc.
 * Sourced files should make vignette authors' life easier, and should not contain anything important to end users/readers.
 * The first code block should start with `rm(list = ls())` to ensure a clean, reproducible workspace.
 * NEED TO DISCUSS: formatting of code blocks. Could use `tidy = TRUE` as one option.
-* If you need to leave a note in a vignette, please use this [method](https://github.com/cbeleites/SKELETON/pull/147#issuecomment-646685392).
+* If you need to leave a note in a vignette, please use this [method](https://github.com/cbeleites/hySpc.read.envi/pull/147#issuecomment-646685392).
 
 
 ## Working With Git
