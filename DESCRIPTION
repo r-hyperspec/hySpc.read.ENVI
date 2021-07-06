@@ -12,7 +12,6 @@ Authors@R: c(
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyLoad: yes
-LazyData: yes
 Additional_repositories: 
     https://r-hyperspec.github.io/pkg-repo/
 Depends:
@@ -21,10 +20,12 @@ Imports:
     hySpc.testthat,
     testthat,
     methods,
-    utils
+    utils,
+    bookdown
 Suggests:
     knitr,
-    covr
+    covr,
+    rmarkdown,
 URL: 
     https://r-hyperspec.github.io/hySpc.read.envi,
     https://github.com/r-hyperspec/hySpc.read.envi
