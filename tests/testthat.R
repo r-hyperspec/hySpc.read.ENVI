@@ -1,4 +1,4 @@
 library(hySpc.testthat)
-library(SKELETON)
+library(hySpc.read.envi)
 
-test_check("SKELETON")
+test_check("hySpc.read.envi")
