@@ -2,11 +2,11 @@
 
 # **TODO** When Creating a New Package (Repository)
 
-Repository **`hySpc.skeleton`** is a package template ("skeleton") for **`r-hyperspec`** family packages.
+Repository **`hySpc.read.ENVI`** is a package template ("skeleton") for **`r-hyperspec`** family packages.
 
 When creating a new package (repository):
 
-- [ ] replace words `SKELETON` and `hySpc.skeleton` with the new package name in:
+- [ ] replace words `hySpc.read.ENVI` and `hySpc.read.ENVI` with the new package name in:
   - [ ] `DESCRIPTION`
   - [ ] `NEWS.md`
   - [ ] `README.md`
@@ -54,31 +54,31 @@ When creating a new package (repository):
 <!-- ---------------------------------------------------------------------- -->
 
 <!-- badges: start -->
-[![CRAN status](https://www.r-pkg.org/badges/version-last-release/hySpc.skeleton)](https://cran.r-project.org/package=hySpc.skeleton)
-[![R-CMD-check](https://github.com/r-hyperspec/hySpc.skeleton/workflows/R-CMD-check/badge.svg)](https://github.com/r-hyperspec/hySpc.skeleton/actions)
-[![Travis](https://travis-ci.com/r-hyperspec/hySpc.skeleton.svg?branch=develop)](https://travis-ci.com/github/r-hyperspec/hySpc.skeleton)
-![Website (pkgdown)](https://github.com/r-hyperspec/hySpc.skeleton/workflows/Website%20(pkgdown)/badge.svg)
-[![Codecov](https://codecov.io/gh/r-hyperspec/hySpc.skeleton/branch/develop/graph/badge.svg)](https://codecov.io/gh/r-hyperspec/hySpc.skeleton?branch=develop)
+[![CRAN status](https://www.r-pkg.org/badges/version-last-release/hySpc.read.ENVI)](https://cran.r-project.org/package=hySpc.read.ENVI)
+[![R-CMD-check](https://github.com/r-hyperspec/hySpc.read.ENVI/workflows/R-CMD-check/badge.svg)](https://github.com/r-hyperspec/hySpc.read.ENVI/actions)
+[![Travis](https://travis-ci.com/r-hyperspec/hySpc.read.ENVI.svg?branch=develop)](https://travis-ci.com/github/r-hyperspec/hySpc.read.ENVI)
+![Website (pkgdown)](https://github.com/r-hyperspec/hySpc.read.ENVI/workflows/Website%20(pkgdown)/badge.svg)
+[![Codecov](https://codecov.io/gh/r-hyperspec/hySpc.read.ENVI/branch/develop/graph/badge.svg)](https://codecov.io/gh/r-hyperspec/hySpc.read.ENVI?branch=develop)
 [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
-<!--[![metacran downloads](https://cranlogs.r-pkg.org/badges/grand-total/hySpc.skeleton)](https://cran.r-project.org/package=hySpc.skeleton)-->
-<!--[![metacran downloads](https://cranlogs.r-pkg.org/badges/hySpc.skeleton)](https://cran.r-project.org/package=hySpc.skeleton)-->
+<!--[![metacran downloads](https://cranlogs.r-pkg.org/badges/grand-total/hySpc.read.ENVI)](https://cran.r-project.org/package=hySpc.read.ENVI)-->
+<!--[![metacran downloads](https://cranlogs.r-pkg.org/badges/hySpc.read.ENVI)](https://cran.r-project.org/package=hySpc.read.ENVI)-->
 <!-- badges: end -->
 
 
 
-# R Package **hySpc.skeleton**
+# R Package **hySpc.read.ENVI**
 
-[**R**](https://www.r-project.org/) package **hySpc.skeleton** is a member of the [**`r-hyperspec`**](https://r-hyperspec.github.io/) packages family, which ...
+[**R**](https://www.r-project.org/) package **hySpc.read.ENVI** is a member of the [**`r-hyperspec`**](https://r-hyperspec.github.io/) packages family, which ...
 **WRITE THE PURPOSE OF THIS PACKAGE**  
 
 <!-- ---------------------------------------------------------------------- -->
 
 ## Documentation
 
-There are two versions of **hySpc.skeleton** online documentation:
+There are two versions of **hySpc.read.ENVI** online documentation:
 
-a. for the [released version](https://r-hyperspec.github.io/hySpc.skeleton/) of package,  
-b. for the [development version](https://r-hyperspec.github.io/hySpc.skeleton/dev/) of package.
+a. for the [released version](https://r-hyperspec.github.io/hySpc.read.ENVI/) of package,  
+b. for the [development version](https://r-hyperspec.github.io/hySpc.read.ENVI/dev/) of package.
 
 The documentation of the other **`r-hyperspec`** family packages can be found at [r-hyperspec.github.io](https://r-hyperspec.github.io/).
 
@@ -88,20 +88,20 @@ The documentation of the other **`r-hyperspec`** family packages can be found at
 
 ### Install from CRAN
 
-You can install the released version of **hySpc.skeleton** from [CRAN](https://cran.r-project.org/package=hySpc.skeleton) with:
+You can install the released version of **hySpc.read.ENVI** from [CRAN](https://cran.r-project.org/package=hySpc.read.ENVI) with:
 
 ```r
-install.packages("hySpc.skeleton")
+install.packages("hySpc.read.ENVI")
 ```
 
 
 ### Install from GitHub
 
-You can install the development version of the package from [GitHub](https://github.com/r-hyperspec/hySpc.skeleton):
+You can install the development version of the package from [GitHub](https://github.com/r-hyperspec/hySpc.read.ENVI):
 
 ```r
 if (!require(remotes)) {install.packages("remotes")}
-remotes::install_github("r-hyperspec/hySpc.skeleton")
+remotes::install_github("r-hyperspec/hySpc.read.ENVI")
 ```
 
 **NOTE 1:**
@@ -114,7 +114,7 @@ So you can either use the [online documentation](https://r-hyperspec.github.io/)
 
 ### Install from Source
 
-1. From the **hySpc.skeleton**'s GitHub [repository](https://github.com/r-hyperspec/hySpc.skeleton):
+1. From the **hySpc.read.ENVI**'s GitHub [repository](https://github.com/r-hyperspec/hySpc.read.ENVI):
     - If you use Git, `git clone` the branch of interest.
       You may need to fork it before cloning.
     - Or just chose the branch of interest (1 in Figure below), download a ZIP archive with the code (2, 3) and unzip it on your computer.  
@@ -126,9 +126,9 @@ So you can either use the [online documentation](https://r-hyperspec.github.io/)
 
 3. In RStudio 'Console' window, run the code (provided below) to:
     a. Install packages **remotes** and **devtools**.
-    b. Install **hySpc.skeleton**'s dependencies.
-    c. Create **hySpc.skeleton**'s documentation.
-    d. Install package **hySpc.skeleton**.
+    b. Install **hySpc.read.ENVI**'s dependencies.
+    c. Create **hySpc.read.ENVI**'s documentation.
+    d. Install package **hySpc.read.ENVI**.
 
 ```r
 # Do not abort installation even if some packages are not available
@@ -137,13 +137,13 @@ Sys.setenv(R_REMOTES_NO_ERRORS_FROM_WARNINGS = "true")
 # Install packages remotes and devtools
 install.packages(c("remotes", "devtools"))
 
-# Install hySpc.skeleton's dependencies
+# Install hySpc.read.ENVI's dependencies
 remotes::install_deps(dependencies = TRUE)
 
-# Create hySpc.skeleton's documentation
+# Create hySpc.read.ENVI's documentation
 devtools::document()
 
-# Install package hySpc.skeleton
+# Install package hySpc.read.ENVI
 devtools::install(build_vignettes = TRUE)
 ```
 
