@@ -1,20 +1,21 @@
-#' @describeIn  read.ENVI
+#' @describeIn  read_ENVI
 #' @include read_ENVI.R
 #' @export
 #'
 #' @concept io
 #'
-read.ENVI.HySpex <- function(file = stop("read.ENVI.HySpex: file name needed"),
+read_ENVI_HySpex <- function(file = stop("read_ENVI_HySpex: file name needed"),
                              headerfile = NULL, header = list(), keys.hdr2data = NULL, ...) {
-  headerfile <- .find.ENVI.header(file, headerfile)
+  headerfile <- .find_ENVI_header(file, headerfile)
   keys <- readLines(headerfile)
-  keys <- .read.ENVI.split.header(keys)
+  keys <- .read_ENVI_split_header(keys)
   keys <- keys[c("pixelsize x", "pixelsize y", "wavelength units")]
 
   header <- modifyList(keys, header)
 
-  ## most work is done by read.ENVI
-  spc <- read.ENVI(file = file, headerfile = headerfile, header = header, ..., pull.header.lines = FALSE)
+  ## most work is done by read_ENVI
+  spc <- read_ENVI(file = file, headerfile = headerfile, header = header, ...,
+    pull.header.lines = FALSE)
 
   label <- list(
     x = "x / pixel",
@@ -28,11 +29,14 @@ read.ENVI.HySpex <- function(file = stop("read.ENVI.HySpex: file name needed"),
   spc
 }
 
-hySpc.testthat::test(read.ENVI.HySpex) <- function() {
-  context("read.ENVI.HySpex")
+hySpc.testthat::test(read_ENVI_HySpex) <- function() {
+  context("read_ENVI_HySpex")
 
   test_that("Hyspex ENVI file", {
     skip_if_not_fileio_available()
-    expect_known_hash(read.ENVI.HySpex("fileio/ENVI/HySpexNIR.hyspex"), "cf35ba92334f22513486f25c5d8ebe32")
+    expect_known_hash(
+      read_ENVI_HySpex("fileio/ENVI/HySpexNIR.hyspex"),
+      "cf35ba92334f22513486f25c5d8ebe32"
+    )
   })
 }

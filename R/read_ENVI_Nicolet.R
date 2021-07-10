@@ -15,27 +15,27 @@
 #' pixel size values (i.e. the step sizes) are multiplied by 1000.
 #'
 #' @param nicolet.correction see details
-#' @describeIn  read.ENVI
+#' @describeIn  read_ENVI
 #' @export
 #'
 #' @concept io
 #'
 #' @importFrom utils modifyList
-read.ENVI.Nicolet <- function(file = stop("read.ENVI: file name needed"),
+read_ENVI_Nicolet <- function(file = stop("read_ENVI: file name needed"),
                               headerfile = NULL, header = list(), ...,
                               x = NA, y = NA,
                               nicolet.correction = FALSE) {
 
   ## the additional keywords to interprete must be read from headerfile
-  headerfile <- .find.ENVI.header(file, headerfile)
+  headerfile <- .find_ENVI_header(file, headerfile)
   keys <- readLines(headerfile)
-  keys <- .read.ENVI.split.header(keys)
-  keys <- keys [c("description", "z plot titles", "pixel size")]
+  keys <- .read_ENVI_split_header(keys)
+  keys <- keys[c("description", "z plot titles", "pixel size")]
 
   header <- modifyList(keys, header)
 
-  ## most work is done by read.ENVI
-  spc <- read.ENVI(
+  ## most work is done by read_ENVI
+  spc <- read_ENVI(
     file = file, headerfile = headerfile, header = header, ...,
     x = if (is.na(x)) 0:1 else x,
     y = if (is.na(y)) 0:1 else y
@@ -89,32 +89,32 @@ read.ENVI.Nicolet <- function(file = stop("read.ENVI: file name needed"),
   if (is.na(x) && is.na(y) &&
     !is.null(header$description) && grepl(p.description, header$description) &&
     !is.null(header$"pixel size") && grepl(p.pixel.size, header$"pixel size")) {
-    x [1] <- as.numeric(sub(p.description, "\\1", header$description))
-    y [1] <- as.numeric(sub(p.description, "\\2", header$description))
+    x[1] <- as.numeric(sub(p.description, "\\1", header$description))
+    y[1] <- as.numeric(sub(p.description, "\\2", header$description))
 
-    x [2] <- as.numeric(sub(p.pixel.size, "\\1", header$"pixel size"))
-    y [2] <- as.numeric(sub(p.pixel.size, "\\2", header$"pixel size"))
+    x[2] <- as.numeric(sub(p.pixel.size, "\\1", header$"pixel size"))
+    y[2] <- as.numeric(sub(p.pixel.size, "\\2", header$"pixel size"))
 
     ## it seems that the step size is given in mm while the offset is in micron
     if (nicolet.correction) {
-      x [2] <- x [2] * 1000
-      y [2] <- y [2] * 1000
+      x[2] <- x[2] * 1000
+      y[2] <- y[2] * 1000
     }
 
     ## now calculate and set the x and y coordinates
-    x <- x [2] * spc$x + x [1]
+    x <- x[2] * spc$x + x[1]
     if (!any(is.na(x))) {
       spc@data$x <- x
     }
 
-    y <- y [2] * spc$y + y [1]
+    y <- y[2] * spc$y + y[1]
     if (!any(is.na(y))) {
       spc@data$y <- y
     }
   }
 
   ## consistent file import behaviour across import functions
-  ## .spc_io_postprocess_optional is called already by read.ENVI
+  ## .spc_io_postprocess_optional is called already by read_ENVI
 
   spc
 }
