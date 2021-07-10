@@ -1,5 +1,5 @@
 #' @describeIn  read.ENVI
-#' @include read.ENVI.R
+#' @include read_ENVI.R
 #' @export
 #'
 #' @concept io
