@@ -9,7 +9,7 @@ read.ENVI.HySpex <- function(file = stop("read.ENVI.HySpex: file name needed"),
   headerfile <- .find.ENVI.header(file, headerfile)
   keys <- readLines(headerfile)
   keys <- .read.ENVI.split.header(keys)
-  keys <- keys [c("pixelsize x", "pixelsize y", "wavelength units")]
+  keys <- keys[c("pixelsize x", "pixelsize y", "wavelength units")]
 
   header <- modifyList(keys, header)
 
