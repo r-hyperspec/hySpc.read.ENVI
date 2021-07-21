@@ -22,9 +22,9 @@ output:
         - vignette.css
         - style.css
 vignette: >
-    % \VignetteIndexEntry{Introduction to Package "hySpc.read.envi"}
-    % \VignetteKeyword{hySpc.read.envi}
-    % \VignettePackage{hySpc.read.envi}
+    % \VignetteIndexEntry{Introduction to Package "hySpc.read.ENVI"}
+    % \VignetteKeyword{hySpc.read.ENVI}
+    % \VignettePackage{hySpc.read.ENVI}
     % \VignetteEngine{knitr::rmarkdown}
     % \VignetteEncoding{UTF-8}
 # Citations/References -------------------------------------------------------
