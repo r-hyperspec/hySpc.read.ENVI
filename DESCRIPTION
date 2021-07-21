@@ -2,7 +2,7 @@ Package: hySpc.read.ENVI
 Type: Package
 Version: 0.0.0.9000
 Title: File Import Functions for Spectra in ENVI File Formats
-Description: File Import Functions for Spectra in ENVI File Formats
+Description: File Import Functions for Spectra in ENVI File Formats.
 Authors@R: c(
     person("Claudia",   "Beleites", role = c("aut", "cre"), email = "Claudia.Beleites@chemometrix.gmbh"),
     person("Sang",      "Truong",   role = c("aut"), email = "sttruong@stanford.edu"),
@@ -33,7 +33,8 @@ BugReports: https://github.com/r-hyperspec/hySpc.read.ENVI/issues
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
 Collate: 
+    'hy_options.R'
     'package.R'
-    'read_ENVI.R'
     'read_ENVI_HySpex.R'
     'read_ENVI_Nicolet.R'
+    'read_ENVI.R'
