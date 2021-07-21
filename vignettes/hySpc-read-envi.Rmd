@@ -22,9 +22,9 @@ output:
         - vignette.css
         - style.css
 vignette: >
-    % \VignetteIndexEntry{Introduction to Package "hySpc.read.envi"}
-    % \VignetteKeyword{hySpc.read.envi}
-    % \VignettePackage{hySpc.read.envi}
+    % \VignetteIndexEntry{Introduction to Package "hySpc.read.ENVI"}
+    % \VignetteKeyword{hySpc.read.ENVI}
+    % \VignettePackage{hySpc.read.ENVI}
     % \VignetteEngine{knitr::rmarkdown}
     % \VignetteEncoding{UTF-8}
 # Citations/References -------------------------------------------------------
@@ -46,7 +46,7 @@ rm(list = ls(all.names = TRUE))
 
 ```{r setup, include = FALSE}
 # Packages -------------------------------------------------------------------
-library(hySpc.read.envi)
+library(hySpc.read.ENVI)
 
 # Functions ------------------------------------------------------------------
 source("vignette-functions.R", encoding = "UTF-8")
@@ -77,9 +77,9 @@ cat(res, sep = '\n')
 ```
 
 ```
-filename <- system.file("extdata", "HySpexNIR.hyspex", package="hySpc.read.envi")
-hyspex <- hySpc.read.envi::read.ENVI.HySpex(filename)
+filename <- system.file("extdata", "HySpexNIR.hyspex", package="hySpc.read.ENVI")
+hyspex <- hySpc.read.ENVI::read.ENVI.HySpex(filename)
 
-filename <- system.file("extdata", "toy.bil", package="hySpc.read.envi")
-toy <- hySpc.read.envi::read.ENVI(filename)
+filename <- system.file("extdata", "toy.bil", package="hySpc.read.ENVI")
+toy <- hySpc.read.ENVI::read.ENVI(filename)
 ```
