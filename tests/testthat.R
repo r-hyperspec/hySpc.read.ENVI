@@ -1,4 +1,4 @@
 library(hySpc.testthat)
-library(hySpc.read.envi)
+library(hySpc.read.ENVI)
 
-test_check("hySpc.read.envi")
+test_check("hySpc.read.ENVI")

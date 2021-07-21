@@ -1,4 +1,4 @@
-# hySpc.read.envi
+# hySpc.read.ENVI
 
 ## Acknowledgements
 The `hyperSpec` team gratefully acknowledges support from the Google Summer of Code program, which sponsored student Sang Truong during summer 2021.

@@ -1,13 +1,13 @@
-Package: hySpc.read.envi
+Package: hySpc.read.ENVI
 Type: Package
 Version: 0.0.0.9000
-Title: Package's Title
-Description: File Import Functions for Spectra in ENVI  File Formats. The imported data are returned as hyperSpec objects.
+Title: File Import Functions for Spectra in ENVI File Formats
+Description: File Import Functions for Spectra in ENVI File Formats
 Authors@R: c(
-    person("Claudia",   "Beleites",  role = c("aut"), email = "Claudia.Beleites@chemometrix.gmbh"),
-    person("Sang",     "Truong", role = c("aut","cre"), email = "sttruong@stanford.edu"),
-    person("Vilmantas", "Gegzna", role = c("aut")),
-    person("Roman", "Kiselev", role = c("aut"))
+    person("Claudia",   "Beleites", role = c("aut", "cre"), email = "Claudia.Beleites@chemometrix.gmbh"),
+    person("Sang",      "Truong",   role = c("aut"), email = "sttruong@stanford.edu"),
+    person("Vilmantas", "Gegzna",   role = c("aut")),
+    person("Roman",     "Kiselev",  role = c("aut"))
     )
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -26,15 +26,14 @@ Suggests:
     knitr,
     covr,
     rmarkdown,
-URL: 
-    https://r-hyperspec.github.io/hySpc.read.envi,
-    https://github.com/r-hyperspec/hySpc.read.envi
-BugReports: https://github.com/r-hyperspec/hySpc.read.envi/issues
+URL:
+    https://r-hyperspec.github.io/hySpc.read.ENVI,
+    https://github.com/r-hyperspec/hySpc.read.ENVI
+BugReports: https://github.com/r-hyperspec/hySpc.read.ENVI/issues
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
 Collate: 
-    'hy_options.R'
     'package.R'
-    'read.ENVI.R'
-    'read.ENVI.HySpex.R'
-    'read.ENVI.Nicolet.R'
+    'read_ENVI.R'
+    'read_ENVI_HySpex.R'
+    'read_ENVI_Nicolet.R'
