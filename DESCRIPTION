@@ -34,7 +34,6 @@ BugReports: https://github.com/r-hyperspec/hySpc.read.ENVI/issues
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
 Collate: 
-    'hy_options.R'
     'package.R'
     'read_ENVI.R'
     'read_ENVI_HySpex.R'
