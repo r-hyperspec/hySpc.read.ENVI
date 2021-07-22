@@ -35,6 +35,6 @@ RoxygenNote: 7.1.1
 Collate: 
     'hy_options.R'
     'package.R'
+    'read_ENVI.R'
     'read_ENVI_HySpex.R'
     'read_ENVI_Nicolet.R'
-    'read_ENVI.R'
