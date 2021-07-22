@@ -14,8 +14,10 @@ read_ENVI_HySpex <- function(file = stop("read_ENVI_HySpex: file name needed"),
   header <- modifyList(keys, header)
 
   ## most work is done by read_ENVI
-  spc <- read_ENVI(file = file, headerfile = headerfile, header = header, ...,
-    pull.header.lines = FALSE)
+  spc <- read_ENVI(
+    file = file, headerfile = headerfile, header = header, ...,
+    pull.header.lines = FALSE
+  )
 
   label <- list(
     x = "x / pixel",
