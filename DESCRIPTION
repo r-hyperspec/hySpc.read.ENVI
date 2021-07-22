@@ -2,7 +2,7 @@ Package: hySpc.read.ENVI
 Type: Package
 Version: 0.0.0.9000
 Title: File Import Functions for Spectra in ENVI File Formats
-Description: File Import Functions for Spectra in ENVI File Formats.
+Description: File import functions for spectra in ENVI file formats.
 Authors@R: c(
     person("Claudia",   "Beleites", role = c("aut", "cre"), email = "Claudia.Beleites@chemometrix.gmbh"),
     person("Sang",      "Truong",   role = c("aut"), email = "sttruong@stanford.edu"),
