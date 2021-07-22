@@ -4,6 +4,7 @@
 #' @import hySpc.testthat
 #' @importFrom methods new
 #' @importFrom utils maintainer
+#' @importFrom methods is
 #' @import testthat
 
 "_PACKAGE"
