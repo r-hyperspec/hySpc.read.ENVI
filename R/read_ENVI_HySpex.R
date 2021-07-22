@@ -34,11 +34,17 @@ read_ENVI_HySpex <- function(file = stop("read_ENVI_HySpex: file name needed"),
 hySpc.testthat::test(read_ENVI_HySpex) <- function() {
   context("read_ENVI_HySpex")
 
+  filename <- system.file("extdata", "HySpexNIR.hyspex", package = "hySpc.read.ENVI")
   test_that("Hyspex ENVI file", {
-    skip_if_not_fileio_available()
-    expect_known_hash(
-      read_ENVI_HySpex("fileio/ENVI/HySpexNIR.hyspex"),
-      "cf35ba92334f22513486f25c5d8ebe32"
-    )
+    hyspex <- hySpc.read.ENVI::read_ENVI_HySpex(filename)
+
+    expect_equal(hyspex$spc[10], 114)
+    expect_equal(hyspex$spc[251], 82)
+
+    expect_equal(round(hyspex@wavelength[[31]], 2), 1117.64)
+    expect_equal(round(hyspex@wavelength[[119]], 2), 1594.75)
+
+    expect_equal(hyspex@label[[1]], "x / pixel")
+    expect_equal(hyspex@label[[3]], "I / a.u.")
   })
 }
