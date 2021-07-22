@@ -1,6 +1,7 @@
 pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
-articles: {}
-last_built: 2021-07-10T19:55Z
+articles:
+  hySpc-read-envi: hySpc-read-envi.html
+last_built: 2021-07-22T11:42Z
 
