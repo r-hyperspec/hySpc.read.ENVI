@@ -26,6 +26,7 @@ Suggests:
     knitr,
     covr,
     rmarkdown,
+    styler
 URL:
     https://r-hyperspec.github.io/hySpc.read.ENVI,
     https://github.com/r-hyperspec/hySpc.read.ENVI
