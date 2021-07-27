@@ -48,10 +48,10 @@ split.line <- function(x, separator, trim.blank = TRUE) {
 
     tmp <- Sys.glob(headerfilename)
 
-    headerfilename <- tmp [!grepl(file, tmp)]
+    headerfilename <- tmp[!grepl(file, tmp)]
 
     if (length(headerfilename) > 1L) {
-      headerfilename <- headerfilename [grepl("[.][hH][dD][rR]$", headerfilename)]
+      headerfilename <- headerfilename[grepl("[.][hH][dD][rR]$", headerfilename)]
 
       if (length(headerfilename == 1L)) {
         message(".find_ENVI_header: Guessing header file name ", headerfilename)
@@ -78,7 +78,7 @@ split.line <- function(x, separator, trim.blank = TRUE) {
   if (!grepl("ENVI", header[1])) {
     stop("Not an ENVI header (ENVI keyword missing)")
   } else {
-    header <- header [-1]
+    header <- header[-1]
   }
 
   ## remove curly braces and put multi-line key-value-pairs into one line
@@ -101,9 +101,9 @@ split.line <- function(x, separator, trim.blank = TRUE) {
   if (pull.lines) {
     for (i in rev(seq_along(l))) {
       header <- c(
-        header [seq_len(l [i] - 1)],
-        paste(header [l [i]:r [i]], collapse = " "),
-        header [-seq_len(r [i])]
+        header[seq_len(l[i] - 1)],
+        paste(header[l[i]:r[i]], collapse = " "),
+        header[-seq_len(r[i])]
       )
     }
   }
@@ -114,22 +114,22 @@ split.line <- function(x, separator, trim.blank = TRUE) {
 
   ## process numeric values
   tmp <- names(header) %in% c("samples", "lines", "bands", "data type", "header offset")
-  header [tmp] <- lapply(header [tmp], as.numeric)
+  header[tmp] <- lapply(header[tmp], as.numeric)
 
   header
 }
 
 ### .................................................................................................
 
-read_ENVI_bin <- function(file, header, block.lines.skip = NULL, block.lines.size = NULL) {
+.read_ENVI_bin <- function(file, header, block.lines.skip = NULL, block.lines.size = NULL) {
   DATA_TYPE_SIZES <- as.integer(c(1, 2, 4, 4, 8, NA, NA, NA, 16, NA, NA, 2))
 
   if (is.null(header$interleave)) {
     header$interleave <- "bsq"
   }
 
-  if (any(is.null(header [c("samples", "lines", "bands", "data type")]) ||
-    is.na(header [c("samples", "lines", "bands", "data type")]))) {
+  if (any(is.null(header[c("samples", "lines", "bands", "data type")]) ||
+    is.na(header[c("samples", "lines", "bands", "data type")]))) {
     stop(
       "Error in ENVI header (required entry missing or incorrect)\n header: ",
       paste(names(header), " = ", header, collapse = ", ")
@@ -152,7 +152,7 @@ read_ENVI_bin <- function(file, header, block.lines.skip = NULL, block.lines.siz
 
   if (is.null(header$`byte order`)) {
     header$`byte order` <- .Platform$endian
-    message("read_ENVI_bin: 'byte order' not given => Guessing '",
+    message(".read_ENVI_bin: 'byte order' not given => Guessing '",
       .Platform$endian, "'\n",
       sep = ""
     )
@@ -180,7 +180,7 @@ read_ENVI_bin <- function(file, header, block.lines.skip = NULL, block.lines.siz
   }
 
   ## size of data point in bytes
-  size <- DATA_TYPE_SIZES [header$`data type`]
+  size <- DATA_TYPE_SIZES[header$`data type`]
 
   ## read blocks of data
   if (block.lines.skip > 0) {
@@ -375,7 +375,7 @@ read_ENVI <- function(file = stop("read_ENVI: file name needed"), headerfile = N
   header <- modifyList(tmp, header)
 
   ## read the binary file
-  spc <- read_ENVI_bin(file, header, block.lines.skip = block.lines.skip, block.lines.size = block.lines.size)
+  spc <- .read_ENVI_bin(file, header, block.lines.skip = block.lines.skip, block.lines.size = block.lines.size)
 
   ## wavelength should contain the mean wavelength of the respective band
   if (!is.null(header$wavelength)) {
@@ -399,7 +399,7 @@ read_ENVI <- function(file = stop("read_ENVI: file name needed"), headerfile = N
   ## header lines => extra data columns
   extra.data <- header[keys.hdr2data]
 
-  if (.options$gc) gc()
+  if (hy.getOption("gc")) gc()
 
   if (length(extra.data) > 0) {
     extra.data <- lapply(extra.data, rep, length.out = length(x))
@@ -408,7 +408,7 @@ read_ENVI <- function(file = stop("read_ENVI: file name needed"), headerfile = N
     data <- data.frame(x = x, y = y)
   }
 
-  if (.options$gc) gc()
+  if (hy.getOption("gc")) gc()
 
   ## finally put together the hyperSpec object
   spc <- new("hyperSpec", data = data, spc = spc, wavelength = wavelength, labels = label)
@@ -417,53 +417,59 @@ read_ENVI <- function(file = stop("read_ENVI: file name needed"), headerfile = N
   .spc_io_postprocess_optional(spc, file)
 }
 
-# hySpc.testthat::test(read_ENVI) <- function() {
-#   context("read_ENVI")
-#   
-#   path <- system.file("extdata", package="hySpc.read.ENVI")
-#   test_that("full spectrum BIL", {
-#     tmp <- hySpc.read.ENVI::read_ENVI(paste0(path, "/toy.bil"))
-#     expect_equal(tmp$filename[1], paste0(path, "/toy.bil"))
-#     expect_equal(nrow(tmp), 21913)
-#     expect_equal(ncol(tmp), 4)
-#     expect_equal(nwl(tmp), 4)
-#     expect_equal(range(tmp$x), c(0, 149))
-#     expect_equal(range(tmp$y), c(0, 166))
-#   })
-# 
-#   test_that("block reading BIL", {
-#     tmp <- hySpc.read.ENVI::read_ENVI(paste0(path, "/toy.bil"), block.lines.skip = 50, block.lines.size = 40)
-#     expect_equal(nrow(tmp), 40 * 150)
-#     expect_equal(ncol(tmp), 4)
-#     expect_equal(nwl(tmp), 4)
-#     expect_equal(range(tmp$x), c(0, 149))
-#     expect_equal(range(tmp$y), c(50, 89))
-#   })
-# 
-#   test_that("block reading BIL: block longer than file", {
-#     tmp <- hySpc.read.ENVI::read_ENVI(paste0(path, "/toy.bil"), block.lines.skip = 150, block.lines.size = 50)
-#     expect_equal(tmp$filename [1], paste0(path, "/toy.bil"))
-#     expect_equal(nrow(tmp), 870) # ! not simple lines x samples multiplication as empty spectra are removed !
-#     expect_equal(ncol(tmp), 4)
-#     expect_equal(nwl(tmp), 4)
-#     expect_equal(range(tmp$x), c(86, 149))
-#     expect_equal(range(tmp$y), c(150, 166))
-#   })
-# 
-#   test_that("Guessing messages", {
-#     expect_message(hySpc.read.ENVI::read_ENVI(paste0(path, "/example2.img")), "read_ENVI_bin: 'byte order' not given => Guessing 'little'")
-#   })
-# 
-#   test_that("empty spectra", {
-#     old <- hy.getOption("file.remove.emptyspc")
-#     on.exit(hy.setOptions(file.remove.emptyspc = old))
-# 
-#     hy.setOptions(file.remove.emptyspc = TRUE)
-#     expect_known_hash(hySpc.read.ENVI::read_ENVI(paste0(path, "/example2.img")), "e987ac694a")
-# 
-#     hy.setOptions(file.remove.emptyspc = FALSE)
-#     expect_known_hash(hySpc.read.ENVI::read_ENVI(paste0(path, "/example2.img")), "00dabd291a")
-# 
-#     hy.setOptions(file.remove.emptyspc = old)
-#   })
-# }
+hySpc.testthat::test(read_ENVI) <- function() {
+  context("read_ENVI")
+
+  # FIXME: fix unit tests
+
+  test_that("full spectrum BIL", {
+    skip_if_not_fileio_available()
+    tmp <- read_ENVI("fileio/ENVI/toy.bil")
+    expect_equal(tmp$filename[1], "fileio/ENVI/toy.bil")
+    expect_equal(nrow(tmp), 21913)
+    expect_equal(ncol(tmp), 4)
+    expect_equal(nwl(tmp), 4)
+    expect_equal(range(tmp$x), c(0, 149))
+    expect_equal(range(tmp$y), c(0, 166))
+  })
+
+  test_that("block reading BIL", {
+    skip_if_not_fileio_available()
+    tmp <- read_ENVI("fileio/ENVI/toy.bil", block.lines.skip = 50, block.lines.size = 40)
+    expect_equal(nrow(tmp), 40 * 150)
+    expect_equal(ncol(tmp), 4)
+    expect_equal(nwl(tmp), 4)
+    expect_equal(range(tmp$x), c(0, 149))
+    expect_equal(range(tmp$y), c(50, 89))
+  })
+
+  test_that("block reading BIL: block longer than file", {
+    skip_if_not_fileio_available()
+    tmp <- read_ENVI("fileio/ENVI/toy.bil", block.lines.skip = 150, block.lines.size = 50)
+    expect_equal(tmp$filename[1], "fileio/ENVI/toy.bil")
+    expect_equal(nrow(tmp), 870) # ! not simple lines x samples multiplication as empty spectra are removed !
+    expect_equal(ncol(tmp), 4)
+    expect_equal(nwl(tmp), 4)
+    expect_equal(range(tmp$x), c(86, 149))
+    expect_equal(range(tmp$y), c(150, 166))
+  })
+
+  test_that("Guessing messages", {
+    skip_if_not_fileio_available()
+    expect_message(read_ENVI("fileio/ENVI/example2.img"), ".read_ENVI_bin: 'byte order' not given => Guessing 'little'")
+  })
+
+  test_that("empty spectra", {
+    skip_if_not_fileio_available()
+    old <- hy.getOption("file.remove.emptyspc")
+    on.exit(hy.setOptions(file.remove.emptyspc = old))
+
+    hy.setOptions(file.remove.emptyspc = TRUE)
+    expect_known_hash(read_ENVI("fileio/ENVI/example2.img"), "e987ac694ac1d6b81cd070f2f1680887")
+
+    hy.setOptions(file.remove.emptyspc = FALSE)
+    expect_known_hash(read_ENVI("fileio/ENVI/example2.img"), "9911a87b8c29c6d23af41a8de5a2508a")
+
+    hy.setOptions(file.remove.emptyspc = old)
+  })
+}
