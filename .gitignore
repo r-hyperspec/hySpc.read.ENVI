@@ -30,9 +30,11 @@ vignettes/fileio
 
 # Documentation
 man/*.Rd
+docs/
 NAMESPACE
 NEWS.html
 README.html
 
 # Other
 _tmp/
+

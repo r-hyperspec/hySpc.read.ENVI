@@ -399,7 +399,7 @@ read_ENVI <- function(file = stop("read_ENVI: file name needed"), headerfile = N
   ## header lines => extra data columns
   extra.data <- header[keys.hdr2data]
 
-  if (hyperSpec::hy.getOption("gc")) gc()
+  if (hy.getOption("gc")) gc()
 
   if (length(extra.data) > 0) {
     extra.data <- lapply(extra.data, rep, length.out = length(x))
@@ -408,7 +408,7 @@ read_ENVI <- function(file = stop("read_ENVI: file name needed"), headerfile = N
     data <- data.frame(x = x, y = y)
   }
 
-  if (hyperSpec::hy.getOption("gc")) gc()
+  if (hy.getOption("gc")) gc()
 
   ## finally put together the hyperSpec object
   spc <- new("hyperSpec", data = data, spc = spc, wavelength = wavelength, labels = label)
@@ -419,6 +419,8 @@ read_ENVI <- function(file = stop("read_ENVI: file name needed"), headerfile = N
 
 hySpc.testthat::test(read_ENVI) <- function() {
   context("read_ENVI")
+
+  # FIXME: fix unit tests
 
   test_that("full spectrum BIL", {
     skip_if_not_fileio_available()
