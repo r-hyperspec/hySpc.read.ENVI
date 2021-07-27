@@ -5,7 +5,7 @@ subtitle:    'Tutorial on Spectra File Import from ENVI Files for "hyperSpec"'
 description: 'Tutorial on spectra file import from ENVI files for "hyperSpec".'
 # Authors --------------------------------------------------------------------
 author:
-  - name: Sang Truong, Claudia Beleites, Vilmantas Gegzna, Roman Kiselev
+  - name: Sang Truong
     email: sttruong@stanford.edu
     corresponding : yes
     affiliation   : Stanford University
