@@ -225,8 +225,10 @@ split.line <- function(x, separator, trim.blank = TRUE) {
     spc <- readBin(f, complex(), n = n, size = size, endian = header$`byte order`),
     stop("ENVI data type (", header$`data type`, ") unknown"), # 10 unused
     stop("ENVI data type (", header$`data type`, ") unknown"), # 11 unused
-    spc <- readBin(f, integer(), n = n, size = size, endian = header$`byte order`,
-      signed = FALSE)
+    spc <- readBin(f, integer(),
+      n = n, size = size, endian = header$`byte order`,
+      signed = FALSE
+    )
   )
 
   close(f)
@@ -484,8 +486,10 @@ hySpc.testthat::test(read_ENVI) <- function() {
 
   test_that("Guessing messages", {
     skip_if_not_fileio_available()
-    expect_message(read_ENVI(
-      "fileio/ENVI/example2.img"),
+    expect_message(
+      read_ENVI(
+        "fileio/ENVI/example2.img"
+      ),
       ".read_ENVI_bin: 'byte order' not given => Guessing 'little'"
     )
   })
@@ -497,7 +501,8 @@ hySpc.testthat::test(read_ENVI) <- function() {
 
     hy.setOptions(file.remove.emptyspc = TRUE)
     expect_known_hash(
-      read_ENVI("fileio/ENVI/example2.img"), "e987ac694ac1d6b81cd070f2f1680887")
+      read_ENVI("fileio/ENVI/example2.img"), "e987ac694ac1d6b81cd070f2f1680887"
+    )
 
     hy.setOptions(file.remove.emptyspc = FALSE)
     expect_known_hash(read_ENVI("fileio/ENVI/example2.img"), "9911a87b8c29c6d23af41a8de5a2508a")
