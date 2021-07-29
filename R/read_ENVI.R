@@ -1,22 +1,19 @@
-####################################################################################################
+############################################################################ ~
 ###
-###  read_ENVI - read ENVI files, missing header files may be replaced by list in parameter header
+###  read_ENVI - read ENVI files, missing header files may be replaced by
+###              list in parameter header.
 ###
 ###  * read_ENVI_Nicolet for ENVI files written by Nicolet spectrometers
 ###  * adapted from caTools read_ENVI
 ###
 ###  Time-stamp: <Claudia Beleites on Saturday, 2011-02-05 at 19:19:00 on cb>
 ###
-####################################################################################################
+############################################################################ ~
 
-### some general helper functions ..................................................................
 
-### -----------------------------------------------------------------------------
-###
-### split.line - split line into list of key-value pairs
-###
-###
+# Helper functions (General) -------------------------------------------------
 
+# split.line - split line into list of key-value pairs
 split.line <- function(x, separator, trim.blank = TRUE) {
   tmp <- regexpr(separator, x)
 
@@ -36,9 +33,9 @@ split.line <- function(x, separator, trim.blank = TRUE) {
 }
 
 
-### some ENVI-specific helper functions .............................................................
+# Helper functions (ENVI-specific) -------------------------------------------
 
-### guesses ENVI header file name
+# guesses ENVI header file name
 .find_ENVI_header <- function(file, headerfilename) {
   if (is.null(headerfilename)) {
     headerfilename <- paste(dirname(file),
@@ -70,18 +67,18 @@ split.line <- function(x, separator, trim.blank = TRUE) {
   headerfilename
 }
 
-# ...................................................................................................
+# .............................................................................
 
 .read_ENVI_split_header <- function(header, pull.lines = TRUE) {
 
-  ## check ENVI at beginning of file
+  # check ENVI at beginning of file
   if (!grepl("ENVI", header[1])) {
     stop("Not an ENVI header (ENVI keyword missing)")
   } else {
     header <- header[-1]
   }
 
-  ## remove curly braces and put multi-line key-value-pairs into one line
+  # remove curly braces and put multi-line key-value-pairs into one line
   header <- gsub("\\{([^}]*)\\}", "\\1", header)
 
   l <- grep("\\{", header)
@@ -108,20 +105,23 @@ split.line <- function(x, separator, trim.blank = TRUE) {
     }
   }
 
-  ## split key = value constructs into list with keys as names
+  # split key = value constructs into list with keys as names
   header <- sapply(header, split.line, "=", USE.NAMES = FALSE)
   names(header) <- tolower(names(header))
 
-  ## process numeric values
+  # process numeric values
   tmp <- names(header) %in% c("samples", "lines", "bands", "data type", "header offset")
   header[tmp] <- lapply(header[tmp], as.numeric)
 
   header
 }
 
-### .................................................................................................
+# .............................................................................
 
-.read_ENVI_bin <- function(file, header, block.lines.skip = NULL, block.lines.size = NULL) {
+.read_ENVI_bin <- function(file,
+                           header,
+                           block.lines.skip = NULL,
+                           block.lines.size = NULL) {
   DATA_TYPE_SIZES <- as.integer(c(1, 2, 4, 4, 8, NA, NA, NA, 16, NA, NA, 2))
 
   if (is.null(header$interleave)) {
@@ -147,7 +147,11 @@ split.line <- function(x, separator, trim.blank = TRUE) {
   }
 
   if (!(header$`data type` %in% c(1:5, 9, 12))) {
-    stop("Error in ENVI header: data type incorrect or unsupported (", header$`data type`, ")")
+    stop(
+      "Error in ENVI header: data type incorrect or unsupported (",
+      header$`data type`,
+      ")"
+    )
   }
 
   if (is.null(header$`byte order`)) {
@@ -179,19 +183,23 @@ split.line <- function(x, separator, trim.blank = TRUE) {
     seek(f, where = header$`header offset`, origin = "start")
   }
 
-  ## size of data point in bytes
+  # size of data point in bytes
   size <- DATA_TYPE_SIZES[header$`data type`]
 
-  ## read blocks of data
+  # read blocks of data
   if (block.lines.skip > 0) {
     skip <- switch(tolower(header$interleave),
       bil = header$samples * header$bands * block.lines.skip,
       bip = header$bands * header$samples * block.lines.skip,
       bsq = stop(
-        "skipping of band sequential (BSQ) ENVI files not yet supported. Please contact the maintainer (",
+        "skipping of band sequential (BSQ) ENVI files not yet supported. ",
+        "Please contact the maintainer (",
         maintainer(pkg = "hyperSpec"), ")."
       ),
-      stop("Unknown interleave (", header$interleave, ") - should be one of 'BSQ', 'BIL', 'BIP'.")
+      stop(
+        "Unknown interleave (", header$interleave, ") - should be one of ",
+        "'BSQ', 'BIL', 'BIP'."
+      )
     )
 
     skip <- skip * size
@@ -202,7 +210,7 @@ split.line <- function(x, separator, trim.blank = TRUE) {
     header$lines <- min(block.lines.size, header$lines - block.lines.skip)
   }
 
-  ## number of data points to read
+  # number of data points to read
   n <- header$samples * header$lines * header$bands
 
   switch(header$`data type`,
@@ -217,7 +225,8 @@ split.line <- function(x, separator, trim.blank = TRUE) {
     spc <- readBin(f, complex(), n = n, size = size, endian = header$`byte order`),
     stop("ENVI data type (", header$`data type`, ") unknown"), # 10 unused
     stop("ENVI data type (", header$`data type`, ") unknown"), # 11 unused
-    spc <- readBin(f, integer(), n = n, size = size, endian = header$`byte order`, signed = FALSE)
+    spc <- readBin(f, integer(), n = n, size = size, endian = header$`byte order`,
+      signed = FALSE)
   )
 
   close(f)
@@ -247,11 +256,12 @@ split.line <- function(x, separator, trim.blank = TRUE) {
   spc
 }
 
-# ..................................................................................................
 
+# Function -------------------------------------------------------------------
 
-
-#' @title Import of ENVI data.
+#' Import of ENVI data
+#'
+#' @aliases read_ENVI read_ENVI_Nicolet read_ENVI_HySpex
 #'
 #' @description
 #' This function allows ENVI data import as `hyperSpec` object.
@@ -306,11 +316,12 @@ split.line <- function(x, separator, trim.blank = TRUE) {
 #' Thus, the object's `$x` column is: `(0 : header$samples - 1) * x
 #' [2] + x [1]`.  The `$y` column is calculated analogously.
 #'
-#' @aliases read_ENVI read_ENVI_Nicolet read_ENVI_HySpex
-#' @param file complete name of the binary file
+#'
+#' @param file Complete name of the binary file.
+#'
 #' @param headerfile name of the ASCII header file. If `NULL`, the name
-#'   of the header file is guessed by looking for a second file with the same
-#'   basename as `file` but `hdr` or `HDR` suffix.
+#'        of the header file is guessed by looking for a second file with
+#'        the same basename as `file` but `hdr` or `HDR` suffix.
 #' @param header list with header information, see details. Overwrites
 #'        information extracted from the header file.
 #' @param x,y vectors of form c(offset, step size) for the position vectors,
@@ -318,34 +329,41 @@ split.line <- function(x, separator, trim.blank = TRUE) {
 #' @param wavelength,label lists that overwrite the respective information
 #'        from the ENVI header file. These data is then handed to
 #'        [hyperSpec::initialize()]
-#' @param block.lines.skip,block.lines.size BIL and BIP ENVI files may be read in blocks of lines:
-#'   skip the first `block.lines.skip` lines, then read a block of `block.lines.size`
-#'   lines. If `block.lines.NULL`, the whole file is read.
-#'   Blocks are silently truncated at the end of the file (more precisely: to `header$lines`).
+#' @param block.lines.skip,block.lines.size BIL and BIP ENVI files may be read
+#'        in blocks of lines: skip the first `block.lines.skip` lines, then
+#'        read a block of `block.lines.size` lines. If `block.lines.NULL`, the
+#'        whole file is read.
+#'        Blocks are silently truncated at the end of the file (more precisely:
+#'        to `header$lines`).
 #' @param keys.hdr2data determines which fields of the header file should be
-#'   put into the extra data. Defaults to none.
+#'        put into the extra data. Defaults to none.
 #'
 #' To specify certain entries, give character vectors containing the lowercase
 #'   names of the header file entries.
-#' @param ... currently unused by `read_ENVI`,
-#'   `read_ENVI_Nicolet` hands those arguements over to `read_ENVI`
-#' @param pull.header.lines (internal) flag whether multi-line header entries grouped by curly
-#'   braces should be pulled into one line each.
-#' @return a `hyperSpec` object
+#'
+#' @param ... currently unused by `read_ENVI()`, `read_ENVI_Nicolet()` hands
+#'        those arguments over to `read_ENVI()`.
+#'
+#' @param pull.header.lines (internal) flag whether multi-line header entries
+#'        grouped by curly braces should be pulled into one line each.
+#'
+#' @return  `hyperSpec` object.
+#'
 #' @author C. Beleites, testing for the Nicolet files C. Dicko
+#'
 #' @seealso [caTools::read.ENVI()]
-#' @references This function was adapted from
-#'   [caTools::read.ENVI()]:
+#'
+#' @references This function was adapted from [caTools::read.ENVI()]:
 #'
 #' Jarek Tuszynski (2008). caTools: Tools: moving window statistics, GIF,
 #'   Base64, ROC AUC, etc.. R package version 1.9.
-#' @export
-#'
-#' @keywords IO file
-#' @concept io
 #'
 #' @importFrom utils modifyList
-read_ENVI <- function(file = stop("read_ENVI: file name needed"), headerfile = NULL,
+#'
+#' @export
+#'
+read_ENVI <- function(file = stop("read_ENVI: file name needed"),
+                      headerfile = NULL,
                       header = list(),
                       keys.hdr2data = FALSE,
                       x = 0:1, y = x,
@@ -360,7 +378,10 @@ read_ENVI <- function(file = stop("read_ENVI: file name needed"), headerfile = N
 
   if (!is.list(header)) { # catch a common pitfall
     if (is.character(header)) {
-      stop("header must be a list of parameters. Did you mean headerfile instead?")
+      stop(
+        "Header must be a list of parameters. ",
+        "Did you mean headerfile instead?"
+      )
     } else {
       stop("header must be a list of parameters.")
     }
@@ -375,11 +396,15 @@ read_ENVI <- function(file = stop("read_ENVI: file name needed"), headerfile = N
   header <- modifyList(tmp, header)
 
   ## read the binary file
-  spc <- .read_ENVI_bin(file, header, block.lines.skip = block.lines.skip, block.lines.size = block.lines.size)
+  spc <- .read_ENVI_bin(file, header,
+    block.lines.skip = block.lines.skip,
+    block.lines.size = block.lines.size
+  )
 
   ## wavelength should contain the mean wavelength of the respective band
   if (!is.null(header$wavelength)) {
-    header$wavelength <- as.numeric(unlist(strsplit(header$wavelength, "[,;[:blank:]]+")))
+    header$wavelength <-
+      as.numeric(unlist(strsplit(header$wavelength, "[,;[:blank:]]+")))
 
     if (!any(is.na(header$wavelength)) && is.null(wavelength)) {
       wavelength <- header$wavelength
@@ -410,12 +435,15 @@ read_ENVI <- function(file = stop("read_ENVI: file name needed"), headerfile = N
 
   if (hy.getOption("gc")) gc()
 
-  ## finally put together the hyperSpec object
+  # finally put together the hyperSpec object
   spc <- new("hyperSpec", data = data, spc = spc, wavelength = wavelength, labels = label)
 
-  ## consistent file import behaviour across import functions
+  # consistent file import behavior across import functions
   .spc_io_postprocess_optional(spc, file)
 }
+
+
+# Unit tests -----------------------------------------------------------------
 
 hySpc.testthat::test(read_ENVI) <- function() {
   context("read_ENVI")
@@ -456,7 +484,10 @@ hySpc.testthat::test(read_ENVI) <- function() {
 
   test_that("Guessing messages", {
     skip_if_not_fileio_available()
-    expect_message(read_ENVI("fileio/ENVI/example2.img"), ".read_ENVI_bin: 'byte order' not given => Guessing 'little'")
+    expect_message(read_ENVI(
+      "fileio/ENVI/example2.img"),
+      ".read_ENVI_bin: 'byte order' not given => Guessing 'little'"
+    )
   })
 
   test_that("empty spectra", {
@@ -465,7 +496,8 @@ hySpc.testthat::test(read_ENVI) <- function() {
     on.exit(hy.setOptions(file.remove.emptyspc = old))
 
     hy.setOptions(file.remove.emptyspc = TRUE)
-    expect_known_hash(read_ENVI("fileio/ENVI/example2.img"), "e987ac694ac1d6b81cd070f2f1680887")
+    expect_known_hash(
+      read_ENVI("fileio/ENVI/example2.img"), "e987ac694ac1d6b81cd070f2f1680887")
 
     hy.setOptions(file.remove.emptyspc = FALSE)
     expect_known_hash(read_ENVI("fileio/ENVI/example2.img"), "9911a87b8c29c6d23af41a8de5a2508a")
