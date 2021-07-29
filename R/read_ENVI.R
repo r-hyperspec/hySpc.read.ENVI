@@ -501,19 +501,13 @@ hySpc.testthat::test(read_ENVI) <- function() {
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     hy.setOptions(file.remove.emptyspc = TRUE)
-    expect_message(
-      spc_1 <- read_ENVI(path_exm2_img),
-      ".read_ENVI_bin: 'byte order' not given => Guessing 'little'"
-    )
+    spc_1 <- read_ENVI(path_exm2_img)
     spc_1$filename <- NULL # `$filename` differ on different machines
     expect_known_hash(spc_1, "48c0297e697f2600ee81af49063144bd")
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     hy.setOptions(file.remove.emptyspc = FALSE)
-    expect_message(
-      spc_2 <- read_ENVI(path_exm2_img),
-      ".read_ENVI_bin: 'byte order' not given => Guessing 'little'"
-    )
+    spc_2 <- read_ENVI(path_exm2_img)
     spc_2$filename <- NULL # `$filename` differ on different machines
     expect_known_hash(spc_2, "5ecd147a62718512ca95fe4ce7f9d153")
 
