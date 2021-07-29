@@ -444,8 +444,6 @@ read_ENVI <- function(file = stop("read_ENVI: file name needed"),
   .spc_io_postprocess_optional(spc, file)
 }
 
-<<<<<<< HEAD
-=======
 
 # Unit tests -----------------------------------------------------------------
 
@@ -512,4 +510,4 @@ hySpc.testthat::test(read_ENVI) <- function() {
     hy.setOptions(file.remove.emptyspc = old)
   })
 }
->>>>>>> develop
+
