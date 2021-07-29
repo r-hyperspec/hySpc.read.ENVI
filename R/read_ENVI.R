@@ -368,9 +368,12 @@ read_ENVI <- function(file = stop("read_ENVI: file name needed"),
                       headerfile = NULL,
                       header = list(),
                       keys.hdr2data = FALSE,
-                      x = 0:1, y = x,
-                      wavelength = NULL, label = list(),
-                      block.lines.skip = 0, block.lines.size = NULL, ...,
+                      x = 0:1,
+                      y = x,
+                      wavelength = NULL,
+                      label = list(),
+                      block.lines.skip = 0,
+                      block.lines.size = NULL, ...,
                       pull.header.lines = TRUE) {
   force(y)
 
@@ -450,63 +453,71 @@ read_ENVI <- function(file = stop("read_ENVI: file name needed"),
 hySpc.testthat::test(read_ENVI) <- function() {
   context("read_ENVI")
 
-  # FIXME: fix unit tests
+  path_toy_bil <- system.file("extdata", "toy.bil", package = "hySpc.read.ENVI")
+  path_exm2_img <- system.file("extdata", "example2.img", package = "hySpc.read.ENVI")
 
   test_that("full spectrum BIL", {
-    skip_if_not_fileio_available()
-    tmp <- read_ENVI("fileio/ENVI/toy.bil")
-    expect_equal(tmp$filename[1], "fileio/ENVI/toy.bil")
-    expect_equal(nrow(tmp), 21913)
-    expect_equal(ncol(tmp), 4)
-    expect_equal(nwl(tmp), 4)
-    expect_equal(range(tmp$x), c(0, 149))
-    expect_equal(range(tmp$y), c(0, 166))
+    spc <- read_ENVI(path_toy_bil)
+    expect_equal(spc$filename[1], path_toy_bil)
+    expect_equal(nrow(spc), 21913)
+    expect_equal(ncol(spc), 4)
+    expect_equal(nwl(spc), 4)
+    expect_equal(range(spc$x), c(0, 149))
+    expect_equal(range(spc$y), c(0, 166))
   })
 
   test_that("block reading BIL", {
-    skip_if_not_fileio_available()
-    tmp <- read_ENVI("fileio/ENVI/toy.bil", block.lines.skip = 50, block.lines.size = 40)
-    expect_equal(nrow(tmp), 40 * 150)
-    expect_equal(ncol(tmp), 4)
-    expect_equal(nwl(tmp), 4)
-    expect_equal(range(tmp$x), c(0, 149))
-    expect_equal(range(tmp$y), c(50, 89))
+    spc <- read_ENVI(path_toy_bil, block.lines.skip = 50, block.lines.size = 40)
+    expect_equal(nrow(spc), 40 * 150)
+    expect_equal(ncol(spc), 4)
+    expect_equal(nwl(spc), 4)
+    expect_equal(range(spc$x), c(0, 149))
+    expect_equal(range(spc$y), c(50, 89))
   })
 
   test_that("block reading BIL: block longer than file", {
-    skip_if_not_fileio_available()
-    tmp <- read_ENVI("fileio/ENVI/toy.bil", block.lines.skip = 150, block.lines.size = 50)
-    expect_equal(tmp$filename[1], "fileio/ENVI/toy.bil")
-    expect_equal(nrow(tmp), 870) # ! not simple lines x samples multiplication as empty spectra are removed !
-    expect_equal(ncol(tmp), 4)
-    expect_equal(nwl(tmp), 4)
-    expect_equal(range(tmp$x), c(86, 149))
-    expect_equal(range(tmp$y), c(150, 166))
+    spc <- read_ENVI(path_toy_bil, block.lines.skip = 150, block.lines.size = 50)
+    expect_equal(spc$filename[1], path_toy_bil)
+
+    # ! not simple lines x samples multiplication as empty spectra are removed!
+    expect_equal(nrow(spc), 870)
+
+    expect_equal(ncol(spc), 4)
+    expect_equal(nwl(spc), 4)
+    expect_equal(range(spc$x), c(86, 149))
+    expect_equal(range(spc$y), c(150, 166))
   })
 
   test_that("Guessing messages", {
-    skip_if_not_fileio_available()
     expect_message(
-      read_ENVI(
-        "fileio/ENVI/example2.img"
-      ),
+      read_ENVI(path_exm2_img),
       ".read_ENVI_bin: 'byte order' not given => Guessing 'little'"
     )
   })
 
   test_that("empty spectra", {
-    skip_if_not_fileio_available()
     old <- hy.getOption("file.remove.emptyspc")
     on.exit(hy.setOptions(file.remove.emptyspc = old))
 
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     hy.setOptions(file.remove.emptyspc = TRUE)
-    expect_known_hash(
-      read_ENVI("fileio/ENVI/example2.img"), "e987ac694ac1d6b81cd070f2f1680887"
+    expect_message(
+      spc_1 <- read_ENVI(path_exm2_img),
+      ".read_ENVI_bin: 'byte order' not given => Guessing 'little'"
     )
+    spc_1$filename <- NULL # `$filename` differ on different machines
+    expect_known_hash(spc_1, "48c0297e697f2600ee81af49063144bd")
 
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     hy.setOptions(file.remove.emptyspc = FALSE)
-    expect_known_hash(read_ENVI("fileio/ENVI/example2.img"), "9911a87b8c29c6d23af41a8de5a2508a")
+    expect_message(
+      spc_2 <- read_ENVI(path_exm2_img),
+      ".read_ENVI_bin: 'byte order' not given => Guessing 'little'"
+    )
+    spc_2$filename <- NULL # `$filename` differ on different machines
+    expect_known_hash(spc_2, "5ecd147a62718512ca95fe4ce7f9d153")
 
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     hy.setOptions(file.remove.emptyspc = old)
   })
 }
