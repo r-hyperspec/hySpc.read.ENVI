@@ -1,3 +1,5 @@
+#' @describeIn read_ENVI
+#'
 #' @details
 #' Nicolet uses some more keywords in their header file.
 #' They are interpreted as follows:
@@ -15,12 +17,11 @@
 #' pixel size values (i.e. the step sizes) are multiplied by 1000.
 #'
 #' @param nicolet.correction see details
-#' @describeIn  read_ENVI
-#' @export
-#'
-#' @concept io
 #'
 #' @importFrom utils modifyList
+#'
+#' @export
+
 read_ENVI_Nicolet <- function(file = stop("read_ENVI: file name needed"),
                               headerfile = NULL, header = list(), ...,
                               x = NA, y = NA,
