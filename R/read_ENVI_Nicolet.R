@@ -121,3 +121,8 @@ read_ENVI_Nicolet <- function(file = stop("read_ENVI: file name needed"),
 
   spc
 }
+
+
+# Unit tests -----------------------------------------------------------------
+
+# FIXME: add unit tests for read_ENVI_Nicolet()
