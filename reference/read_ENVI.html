@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Import of ENVI data. — read_ENVI • hySpc.read.ENVI</title>
+<title>Import of ENVI data — read_ENVI • hySpc.read.ENVI</title>
 
 
 <!-- jquery -->
@@ -41,7 +41,7 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Import of ENVI data. — read_ENVI" />
+<meta property="og:title" content="Import of ENVI data — read_ENVI" />
 <meta property="og:description" content="This function allows ENVI data import as `hyperSpec` object.
 `read_ENVI_Nicolet()` should be a good starting point for writing custom
 wrappers for `read_ENVI()` that take into account your manufacturer's
@@ -119,7 +119,7 @@ special entries in the header file." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Import of ENVI data.</h1>
+    <h1>Import of ENVI data</h1>
     <small class="dont-index">Source: <a href='https://github.com/r-hyperspec/hySpc.read.ENVI/blob/master/R/read_ENVI.R'><code>R/read_ENVI.R</code></a>, <a href='https://github.com/r-hyperspec/hySpc.read.ENVI/blob/master/R/read_ENVI_HySpex.R'><code>R/read_ENVI_HySpex.R</code></a>, <a href='https://github.com/r-hyperspec/hySpc.read.ENVI/blob/master/R/read_ENVI_Nicolet.R'><code>R/read_ENVI_Nicolet.R</code></a></small>
     <div class="hidden name"><code>read_ENVI.Rd</code></div>
     </div>
@@ -169,13 +169,13 @@ special entries in the header file.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>file</th>
-      <td><p>complete name of the binary file</p></td>
+      <td><p>Complete name of the binary file.</p></td>
     </tr>
     <tr>
       <th>headerfile</th>
       <td><p>name of the ASCII header file. If `NULL`, the name
-of the header file is guessed by looking for a second file with the same
-basename as `file` but `hdr` or `HDR` suffix.</p></td>
+of the header file is guessed by looking for a second file with
+the same basename as `file` but `hdr` or `HDR` suffix.</p></td>
     </tr>
     <tr>
       <th>header</th>
@@ -185,7 +185,7 @@ information extracted from the header file.</p></td>
     <tr>
       <th>keys.hdr2data</th>
       <td><p>determines which fields of the header file should be
-  put into the extra data. Defaults to none.</p>
+       put into the extra data. Defaults to none.</p>
 <p>To specify certain entries, give character vectors containing the lowercase
   names of the header file entries.</p></td>
     </tr>
@@ -202,20 +202,22 @@ from the ENVI header file. These data is then handed to
     </tr>
     <tr>
       <th>block.lines.skip, block.lines.size</th>
-      <td><p>BIL and BIP ENVI files may be read in blocks of lines:
-skip the first `block.lines.skip` lines, then read a block of `block.lines.size`
-lines. If `block.lines.NULL`, the whole file is read.
-Blocks are silently truncated at the end of the file (more precisely: to `header$lines`).</p></td>
+      <td><p>BIL and BIP ENVI files may be read
+in blocks of lines: skip the first `block.lines.skip` lines, then
+read a block of `block.lines.size` lines. If `block.lines.NULL`, the
+whole file is read.
+Blocks are silently truncated at the end of the file (more precisely:
+to `header$lines`).</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>currently unused by `read_ENVI`,
-`read_ENVI_Nicolet` hands those arguements over to `read_ENVI`</p></td>
+      <td><p>currently unused by `read_ENVI()`, `read_ENVI_Nicolet()` hands
+those arguments over to `read_ENVI()`.</p></td>
     </tr>
     <tr>
       <th>pull.header.lines</th>
-      <td><p>(internal) flag whether multi-line header entries grouped by curly
-braces should be pulled into one line each.</p></td>
+      <td><p>(internal) flag whether multi-line header entries
+grouped by curly braces should be pulled into one line each.</p></td>
     </tr>
     <tr>
       <th>nicolet.correction</th>
@@ -225,7 +227,7 @@ braces should be pulled into one line each.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a `hyperSpec` object</p>
+    <p>`hyperSpec` object.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>ENVI data usually consists of two files, an ASCII header and a binary data
@@ -288,8 +290,7 @@ pixel size values (i.e. the step sizes) are multiplied by 1000.</p>
 </ul>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>This function was adapted from
-  [caTools::read.ENVI()]:</p>
+    <p>This function was adapted from [caTools::read.ENVI()]:</p>
 <p>Jarek Tuszynski (2008). caTools: Tools: moving window statistics, GIF,
   Base64, ROC AUC, etc.. R package version 1.9.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
