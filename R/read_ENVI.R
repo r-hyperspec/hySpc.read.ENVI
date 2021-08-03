@@ -426,7 +426,7 @@ read_ENVI <- function(file = stop("read_ENVI: file name needed"),
   ## header lines => extra data columns
   extra.data <- header[keys.hdr2data]
 
-  if (hy.getOption("gc")) gc()
+  if (hy_get_option("gc")) gc()
 
   if (length(extra.data) > 0) {
     extra.data <- lapply(extra.data, rep, length.out = length(x))
@@ -435,7 +435,7 @@ read_ENVI <- function(file = stop("read_ENVI: file name needed"),
     data <- data.frame(x = x, y = y)
   }
 
-  if (hy.getOption("gc")) gc()
+  if (hy_get_option("gc")) gc()
 
   # finally put together the hyperSpec object
   spc <- new("hyperSpec", data = data, spc = spc, wavelength = wavelength, labels = label)
@@ -496,17 +496,17 @@ hySpc.testthat::test(read_ENVI) <- function() {
 
   test_that("empty spectra", {
     skip_if_not_fileio_available()
-    old <- hy.getOption("file.remove.emptyspc")
-    on.exit(hy.setOptions(file.remove.emptyspc = old))
+    old <- hy_get_option("file.remove.emptyspc")
+    on.exit(hy_set_options(file.remove.emptyspc = old))
 
-    hy.setOptions(file.remove.emptyspc = TRUE)
+    hy_set_options(file.remove.emptyspc = TRUE)
     expect_known_hash(
       read_ENVI("fileio/ENVI/example2.img"), "e987ac694ac1d6b81cd070f2f1680887"
     )
 
-    hy.setOptions(file.remove.emptyspc = FALSE)
+    hy_set_options(file.remove.emptyspc = FALSE)
     expect_known_hash(read_ENVI("fileio/ENVI/example2.img"), "9911a87b8c29c6d23af41a8de5a2508a")
 
-    hy.setOptions(file.remove.emptyspc = old)
+    hy_set_options(file.remove.emptyspc = old)
   })
 }
