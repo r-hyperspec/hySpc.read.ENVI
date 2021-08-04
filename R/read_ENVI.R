@@ -458,10 +458,7 @@ hySpc.testthat::test(read_ENVI) <- function() {
 
   test_that("full spectrum BIL", {
     spc <- read_ENVI(path_toy_bil)
-    expect_equal(spc$filename[1], path_toy_bil)
-    expect_equal(nrow(spc), 21913)
-    expect_equal(ncol(spc), 4)
-    expect_equal(nwl(spc), 4)
+    expect_equal(dim(spc), c(nrow = 21913L, ncol = 4L, nwl = 4L))
     expect_equal(range(spc$x), c(0, 149))
     expect_equal(range(spc$y), c(0, 166))
   })
@@ -477,7 +474,6 @@ hySpc.testthat::test(read_ENVI) <- function() {
 
   test_that("block reading BIL: block longer than file", {
     spc <- read_ENVI(path_toy_bil, block.lines.skip = 150, block.lines.size = 50)
-    expect_equal(spc$filename[1], path_toy_bil)
 
     # ! not simple lines x samples multiplication as empty spectra are removed!
     expect_equal(nrow(spc), 870)
