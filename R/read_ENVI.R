@@ -429,7 +429,7 @@ read_ENVI <- function(file = stop("read_ENVI: file name needed"),
   ## header lines => extra data columns
   extra.data <- header[keys.hdr2data]
 
-  if (hy.getOption("gc")) gc()
+  if (hy_get_option("gc")) gc()
 
   if (length(extra.data) > 0) {
     extra.data <- lapply(extra.data, rep, length.out = length(x))
@@ -438,7 +438,7 @@ read_ENVI <- function(file = stop("read_ENVI: file name needed"),
     data <- data.frame(x = x, y = y)
   }
 
-  if (hy.getOption("gc")) gc()
+  if (hy_get_option("gc")) gc()
 
   # finally put together the hyperSpec object
   spc <- new("hyperSpec", data = data, spc = spc, wavelength = wavelength, labels = label)

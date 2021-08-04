@@ -9,7 +9,7 @@ Authors@R: c(
     person("Vilmantas", "Gegzna",   role = c("aut")),
     person("Roman",     "Kiselev",  role = c("aut"))
     )
-License: MIT + file LICENSE
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyLoad: yes
 Additional_repositories: 
