@@ -1,3 +1,7 @@
+# Function -------------------------------------------------------------------
+
+#' @describeIn read_ENVI
+#'
 #' @details
 #' Nicolet uses some more keywords in their header file.
 #' They are interpreted as follows:
@@ -15,18 +19,17 @@
 #' pixel size values (i.e. the step sizes) are multiplied by 1000.
 #'
 #' @param nicolet.correction see details
-#' @describeIn  read_ENVI
-#' @export
-#'
-#' @concept io
 #'
 #' @importFrom utils modifyList
+#'
+#' @export
+
 read_ENVI_Nicolet <- function(file = stop("read_ENVI: file name needed"),
                               headerfile = NULL, header = list(), ...,
                               x = NA, y = NA,
                               nicolet.correction = FALSE) {
 
-  ## the additional keywords to interprete must be read from headerfile
+  # the additional keywords to interpret must be read from headerfile
   headerfile <- .find_ENVI_header(file, headerfile)
   keys <- readLines(headerfile)
   keys <- .read_ENVI_split_header(keys)
@@ -34,17 +37,17 @@ read_ENVI_Nicolet <- function(file = stop("read_ENVI: file name needed"),
 
   header <- modifyList(keys, header)
 
-  ## most work is done by read_ENVI
+  # most work is done by read_ENVI
   spc <- read_ENVI(
     file = file, headerfile = headerfile, header = header, ...,
     x = if (is.na(x)) 0:1 else x,
     y = if (is.na(y)) 0:1 else y
   )
 
-  ### From here on processing the additional keywords in Nicolet's ENVI header *
+  # From here on processing the additional keywords in Nicolet's ENVI header *
 
-  ## z plot titles -------------------------------------------------------------
-  ## default labels
+  # z plot titles -----------------------------------------------------------
+  # default labels
   label <- list(
     x = expression(`/`(x, micro * m)),
     y = expression(`/`(y, micro * m)),
@@ -52,7 +55,7 @@ read_ENVI_Nicolet <- function(file = stop("read_ENVI: file name needed"),
     .wavelength = expression(tilde(nu) / cm^-1)
   )
 
-  ## get labels from header information
+  # get labels from header information
   if (!is.null(header$"z plot titles")) {
     pattern <- "^[[:blank:]]*([[:print:]^,]+)[[:blank:]]*,.*$"
     tmp <- sub(pattern, "\\1", header$"z plot titles")
@@ -72,14 +75,14 @@ read_ENVI_Nicolet <- function(file = stop("read_ENVI: file name needed"),
     }
   }
 
-  ## modify the labels accordingly
+  # modify the labels accordingly
   spc@label <- modifyList(label, spc@label)
 
-  ## set up spatial coordinates ------------------------------------------------
-  ## look for x and y in the header only if x and y are NULL
-  ## they are in `description` and `pixel size`
+  # Set up spatial coordinates ----------------------------------------------
+  # look for x and y in the header only if x and y are NULL
+  # they are in `description` and `pixel size`
 
-  ## set up regular expressions to extract the values
+  # set up regular expressions to extract the values
   p.description <- paste(
     "^Spectrum position[[:digit:]]+ of[[:digit:]]+ positions,",
     "X = ([[:digit:].-]+), Y = ([[:digit:].-]+)$"
@@ -95,13 +98,13 @@ read_ENVI_Nicolet <- function(file = stop("read_ENVI: file name needed"),
     x[2] <- as.numeric(sub(p.pixel.size, "\\1", header$"pixel size"))
     y[2] <- as.numeric(sub(p.pixel.size, "\\2", header$"pixel size"))
 
-    ## it seems that the step size is given in mm while the offset is in micron
+    # it seems that the step size is given in mm while the offset is in micron
     if (nicolet.correction) {
       x[2] <- x[2] * 1000
       y[2] <- y[2] * 1000
     }
 
-    ## now calculate and set the x and y coordinates
+    # now calculate and set the x and y coordinates
     x <- x[2] * spc$x + x[1]
     if (!any(is.na(x))) {
       spc@data$x <- x
@@ -113,8 +116,13 @@ read_ENVI_Nicolet <- function(file = stop("read_ENVI: file name needed"),
     }
   }
 
-  ## consistent file import behaviour across import functions
-  ## .spc_io_postprocess_optional is called already by read_ENVI
+  # consistent file import behavior across import functions
+  # .spc_io_postprocess_optional() is called already by read_ENVI()
 
   spc
 }
+
+
+# Unit tests -----------------------------------------------------------------
+
+# FIXME: add unit tests for read_ENVI_Nicolet()

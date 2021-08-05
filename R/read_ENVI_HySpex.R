@@ -1,9 +1,8 @@
+# Function -------------------------------------------------------------------
 #' @describeIn  read_ENVI
 #' @include read_ENVI.R
 #' @export
-#'
-#' @concept io
-#'
+
 read_ENVI_HySpex <- function(file = stop("read_ENVI_HySpex: file name needed"),
                              headerfile = NULL, header = list(), keys.hdr2data = NULL, ...) {
   headerfile <- .find_ENVI_header(file, headerfile)
@@ -31,34 +30,26 @@ read_ENVI_HySpex <- function(file = stop("read_ENVI_HySpex: file name needed"),
   spc
 }
 
-# FIXME: fix unit tests
+# Unit tests -----------------------------------------------------------------
 
 hySpc.testthat::test(read_ENVI_HySpex) <- function() {
   context("read_ENVI_HySpex")
 
-  filename <- system.file("extdata", "HySpexNIR.hyspex", package = "hySpc.read.ENVI")
-  test_that("Hyspex ENVI file", {
-    hyspex <- hySpc.read.ENVI::read_ENVI_HySpex(filename)
-
-    expect_equal(hyspex$spc[10], 114)
-    expect_equal(hyspex$spc[251], 82)
-
-    expect_equal(round(hyspex@wavelength[[31]], 2), 1117.64)
-    expect_equal(round(hyspex@wavelength[[119]], 2), 1594.75)
-
-    expect_equal(hyspex@label[[1]], "x / pixel")
-    expect_equal(hyspex@label[[3]], "I / a.u.")
-  })
-}
-
-hySpc.testthat::test(read_ENVI_HySpex) <- function() {
-  context("read_ENVI_HySpex")
+  filename <- system.file("extdata", "HySpexNIR.hyspex",
+    package = "hySpc.read.ENVI"
+  )
 
   test_that("Hyspex ENVI file", {
-    skip_if_not_fileio_available()
-    expect_known_hash(
-      read_ENVI_HySpex("fileio/ENVI/HySpexNIR.hyspex"),
-      "cf35ba92334f22513486f25c5d8ebe32"
-    )
+    spc_hyspex <- read_ENVI_HySpex(filename)
+
+    expect_equal(dim(spc_hyspex), c(nrow = 4992L, ncol = 4L, nwl = 288L))
+    expect_equivalent(spc_hyspex[[2, , 1000]], 186)
+    expect_equivalent(spc_hyspex[[4990, , 2200]], 169)
+
+    expect_equal(round(wl(spc_hyspex)[31], 2), 1117.64)
+    expect_equal(round(spc_hyspex@wavelength[119], 2), 1594.75)
+
+    expect_equal(spc_hyspex@label[[1]], "x / pixel")
+    expect_equal(spc_hyspex@label[[3]], "I / a.u.")
   })
 }
