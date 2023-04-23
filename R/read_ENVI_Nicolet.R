@@ -28,7 +28,6 @@ read_ENVI_Nicolet <- function(file = stop("read_ENVI: file name needed"),
                               headerfile = NULL, header = list(), ...,
                               x = NA, y = NA,
                               nicolet.correction = FALSE) {
-
   # the additional keywords to interpret must be read from headerfile
   headerfile <- .find_ENVI_header(file, headerfile)
   keys <- readLines(headerfile)

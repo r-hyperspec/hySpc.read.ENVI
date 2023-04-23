@@ -70,7 +70,6 @@ split.line <- function(x, separator, trim.blank = TRUE) {
 # .............................................................................
 
 .read_ENVI_split_header <- function(header, pull.lines = TRUE) {
-
   # check ENVI at beginning of file
   if (!grepl("ENVI", header[1])) {
     stop("Not an ENVI header (ENVI keyword missing)")
@@ -129,7 +128,7 @@ split.line <- function(x, separator, trim.blank = TRUE) {
   }
 
   if (any(is.null(header[c("samples", "lines", "bands", "data type")])) ||
-      any(is.na  (header[c("samples", "lines", "bands", "data type")]))) {
+    any(    is.na(header[c("samples", "lines", "bands", "data type")]))) {
     stop(
       "Error in ENVI header (required entry missing or incorrect)\n header: ",
       paste(names(header), " = ", header, collapse = ", ")
@@ -511,4 +510,3 @@ hySpc.testthat::test(read_ENVI) <- function() {
     hy.setOptions(file.remove.emptyspc = old)
   })
 }
-
