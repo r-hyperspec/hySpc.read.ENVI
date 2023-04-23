@@ -288,21 +288,21 @@ split.line <- function(x, separator, trim.blank = TRUE) {
 #' `lines`            \tab integer       \tab no of lines / spectra in y direction\cr
 #' `bands`            \tab integer       \tab no of wavelengths / data points per spectrum\cr
 #' ``data type``      \tab               \tab format of the binary file\cr
-#'                         \tab 1             \tab 1 byte unsigned integer \cr
-#'                         \tab 2             \tab 2 byte signed integer \cr
-#'                         \tab 3             \tab 4 byte signed integer \cr
-#'                         \tab 4             \tab 4 byte float \cr
-#'                         \tab 5             \tab 8 byte double \cr
-#'                         \tab 9             \tab 16 (2 x 8) byte complex double \cr
-#'                         \tab 12            \tab 2 byte unsigned integer \cr
+#'                    \tab 1             \tab 1 byte unsigned integer \cr
+#'                    \tab 2             \tab 2 byte signed integer \cr
+#'                    \tab 3             \tab 4 byte signed integer \cr
+#'                    \tab 4             \tab 4 byte float \cr
+#'                    \tab 5             \tab 8 byte double \cr
+#'                    \tab 9             \tab 16 (2 x 8) byte complex double \cr
+#'                    \tab 12            \tab 2 byte unsigned integer \cr
 #'  ``header offset`` \tab integer       \tab number of bytes to skip before binary data starts\cr
 #'  `interleave`      \tab               \tab directions of the data cube \cr
-#'                         \tab "BSQ"         \tab band sequential (indexing: \[sample, line, band\])\cr
-#'                         \tab "BIL"         \tab band interleave by line (indexing: \[sample, line, band\])\cr
-#'                         \tab "BIP"         \tab band interleave by pixel (indexing: \[band, line, sample\])\cr
+#'                    \tab "BSQ"         \tab band sequential (indexing: \[sample, line, band\])\cr
+#'                    \tab "BIL"         \tab band interleave by line (indexing: \[sample, line, band\])\cr
+#'                    \tab "BIP"         \tab band interleave by pixel (indexing: \[band, line, sample\])\cr
 #'  ``byte order``    \tab 0 or "little" \tab little endian \cr
-#'                         \tab 1 or "big"    \tab big endian \cr
-#'                         \tab "swap"        \tab swap byte order
+#'                    \tab 1 or "big"    \tab big endian \cr
+#'                    \tab "swap"        \tab swap byte order
 #' }
 #'
 #' Some more information that is not provided by the ENVI files may be given:
